@@ -4,40 +4,42 @@
 // Did this code successfully run on Leetcode :yes
 // Any problem you faced while coding this :no
 import java.util.Stack;
-
 class MinStack {
-    Stack<Integer>mainStack;// holds every value
-    Stack<Integer>minStack; //track the min values only
+    Stack<Integer>s;// holds every value
+    Stack<Integer>minStack;
+    int min; //track the min values only
 
     public MinStack() {
-        mainStack = new Stack<>();
+        s = new Stack<>();
         minStack = new Stack<>();
-
+        min=Integer.MAX_VALUE;
         
     }
     
     public void push(int val) { 
-        mainStack.push(val); //pushing new val in to main and checking for minstack too if it less than  or equal to  the top value of minstack then push the val to minstack too
-        if(minStack.isEmpty() || val<=minStack.peek()){
-            minStack.push(val);
+         //pushing new val in to main and checking for minstack too if it less than  or equal to  the top value of minstack then push the val to minstack too
+        if(val<=min){
+            s.push(min);
+            min=val;
         }
+        s.push(val);
         
     }
     
     public void pop() {
-        int removed=mainStack.pop();// if removed element in mainstack is equal to top element of minstack remove in minstack too
-        if(removed == minStack.peek())
-        minStack.pop();
+        int removed=s.pop();// Remove the val from stack and if removed element  is equal to min val then again do the pop and make min=removed val
+        if(removed == min)
+        min=s.pop();
         
     }
     
     public int top() {
-        return mainStack.peek();// return the peek element of mainstack
+        return s.peek();// return the peek element of mainstack
         
     }
     
     public int getMin() {
-        return minStack.peek();// return the peek element of minstack by using getMin
+        return min;// return the min element of minstack by using getMin
         
     }
 }
